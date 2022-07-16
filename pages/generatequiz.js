@@ -7,7 +7,7 @@ export default function Generatequiz() {
   const [selectedQustionType, setSelectedQustionType] = useState("select");
 
   return (
-    <div>
+    <DashboardLayout>
       <div className="flex justify-between items-center">
         <div className="text-3xl font-semibold">Generate New Quiz</div>
         <button class="btn btn-success">Generate Quiz</button>
@@ -34,10 +34,7 @@ export default function Generatequiz() {
         {selectedQustionType === "mcq" && <MCQTemplate />}
         {selectedQustionType === "text" && <TextQuestionTemplate />}
       </div>
-    </div>
+    </DashboardLayout>
   );
 }
 
-Generatequiz.getLayout = function getLayout(page) {
-  return <DashboardLayout>{page}</DashboardLayout>;
-};
