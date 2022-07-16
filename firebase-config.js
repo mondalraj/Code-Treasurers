@@ -12,7 +12,10 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const adminCollection = collection(db, "admin");
-export const resultCollection = collection(db, "result");
+const auth = getAuth(app);
+const db = getFirestore(app);
+const adminCollection = collection(db, "admin");
+const resultCollection = collection(db, "result");
+
+export {app, auth, db, adminCollection, resultCollection};
+

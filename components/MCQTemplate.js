@@ -139,7 +139,7 @@ const MCQTemplate = ({ questionsList, setQuestionsList }) => {
               value={timeLimit}
               onChange={(e) => setTimeLimit(e.target.value)}
               min="10"
-              max="300"
+              max="100"
             />
             <div>in seconds.</div>
           </div>
