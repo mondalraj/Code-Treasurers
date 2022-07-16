@@ -2,7 +2,11 @@ import React from "react";
 import DashboardLayout from "../components/DashboardLayout";
 
 export default function Dashboard() {
-  return <div>dashboard</div>;
+  return (
+    <div>
+      <div className="text-3xl font-semibold">Admin Dashboard</div>
+    </div>
+  );
 }
 
 Dashboard.getLayout = function getLayout(page) {
