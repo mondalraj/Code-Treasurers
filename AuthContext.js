@@ -13,14 +13,14 @@ const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
-  const googleSignIn = () => {
+  const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider);
-    // signInWithRedirect(auth, provider)
+    // signInWithRedirect(auth, provider);
   };
 
   const logOut = () => {
-      signOut(auth)
+    signOut(auth)
   }
 
   useEffect(() => {
