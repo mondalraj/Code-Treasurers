@@ -1,19 +1,17 @@
 import React, { useState } from "react";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
 
-const MCQTemplate = () => {
-  const [optionsList, setOptionsList] = useState([
-    { option: "" },
-    { option: "" },
-  ]);
+const MCQTemplate = ({ questionsList, setQuestionsList }) => {
+  const [optionsList, setOptionsList] = useState(["", ""]);
   const [question, setQuestion] = useState("");
-  const [timeLimit, setTimeLimit] = useState();
-  const [marks, setMarks] = useState();
+  const [timeLimit, setTimeLimit] = useState(10);
+  const [marks, setMarks] = useState(1);
   const [answer, setAnswer] = useState(0);
 
   const handleServiceChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...optionsList];
-    list[index][name] = value;
+    list[index] = value;
     setOptionsList(list);
   };
 
@@ -24,10 +22,40 @@ const MCQTemplate = () => {
   };
 
   const handleServiceAdd = () => {
-    setOptionsList([...optionsList, { option: "" }]);
+    setOptionsList([...optionsList, ""]);
   };
 
   const submitQuestion = () => {
+    if (!question) {
+      Notify.failure("Write down the question", {
+        position: "right-bottom",
+      });
+      return;
+    }
+    if (optionsList[0].length == 0 || optionsList[1].length == 0) {
+      Notify.failure("Write Atleast 2 Options", {
+        position: "right-bottom",
+      });
+      return;
+    }
+    if (answer == 0) {
+      Notify.failure("Select the answer for the question", {
+        position: "right-bottom",
+      });
+      return;
+    }
+    if (timeLimit < 10) {
+      Notify.failure("Give proper time limit", {
+        position: "right-bottom",
+      });
+      return;
+    }
+    if (marks <= 0) {
+      Notify.failure("Give appropriate marks", {
+        position: "right-bottom",
+      });
+      return;
+    }
     let questionSchema = {
       question: question,
       options: optionsList,
@@ -36,7 +64,18 @@ const MCQTemplate = () => {
       timeInterval: timeLimit ? timeLimit : 0,
       marks: marks,
     };
-    console.log(questionSchema);
+    setQuestionsList([...questionsList, questionSchema]);
+
+    Notify.success("Question Successfully Added", {
+      position: "right-bottom",
+    });
+
+    setQuestion("");
+    setOptionsList(["", ""]);
+    setAnswer(0);
+    setTimeLimit(10);
+    setMarks(1);
+    // console.log(questionSchema);
   };
   return (
     <div className="w-2/3 pb-16">
@@ -44,13 +83,12 @@ const MCQTemplate = () => {
         <label class="label">
           <span class="label-text">Write down the Question?*</span>
         </label>
-        <input
-          type="text"
+        <textarea
+          class="textarea textarea-bordered  w-full"
           placeholder="Type here"
-          class="input input-bordered w-full"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-        />
+        ></textarea>
         <div className="bg-slate-600 h-px w-full my-5"></div>
         <label class="label">
           <span class="label-text">List down the Options*</span>
@@ -65,7 +103,7 @@ const MCQTemplate = () => {
                 name="option"
                 placeholder="Type here"
                 class="input input-bordered w-full"
-                value={singleService.option}
+                value={singleService}
                 onChange={(e) => handleServiceChange(e, index)}
                 required
               />
@@ -96,9 +134,12 @@ const MCQTemplate = () => {
           <div className="flex items-end gap-2">
             <input
               type="number"
-              placeholder="Type here (Optional)"
+              placeholder="Type here"
               class="input input-bordered w-full max-w-xs"
+              value={timeLimit}
               onChange={(e) => setTimeLimit(e.target.value)}
+              min="10"
+              max="100"
             />
             <div>in seconds.</div>
           </div>
@@ -120,7 +161,7 @@ const MCQTemplate = () => {
             {optionsList.map((singleOption, index) => {
               return (
                 <option key={index} value={index + 1}>
-                  {index + 1} . {singleOption.option}
+                  {index + 1} . {singleOption}
                 </option>
               );
             })}
@@ -137,7 +178,10 @@ const MCQTemplate = () => {
               type="number"
               placeholder="Type here"
               class="input input-bordered w-full max-w-xs"
+              value={marks}
               onChange={(e) => setMarks(e.target.value)}
+              min="1"
+              max="100"
             />
           </div>
         </div>
@@ -146,7 +190,7 @@ const MCQTemplate = () => {
             class="btn btn-info absolute right-0"
             onClick={submitQuestion}
           >
-            Submit Question
+            Add Question
           </button>
         </div>
       </div>

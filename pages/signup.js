@@ -42,10 +42,10 @@ export default function Signup() {
 
   return (
     <>
-      <div className="bg-gray-100 min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col">
         <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-          <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
-            <h1 className="mb-8 text-3xl text-center">Admin Sign up</h1>
+          <div className="bg-neutral px-6 py-8 rounded shadow-md text-black w-full">
+            <h1 className="mb-8 text-3xl text-center text-white">Admin Sign up</h1>
             <input
               type="text"
               className="block border border-grey-light w-full p-3 rounded mb-4"
@@ -76,20 +76,19 @@ export default function Signup() {
               name="confirm_password"
               placeholder="Confirm Password"
             />
-            <div className="text-gray-500 flex justify-end mb-3">
+            <div className="text-gray-200 flex justify-end mb-3">
               Already have an account?
               <a
-                className="no-underline border-b border-blue text-blue"
+                className="no-underline border-b border-blue text-blue px-2"
                 href="../login/"
               >
-                Log in
+                Login
               </a>
-              .
             </div>
 
             <button
               type="submit"
-              className="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-dark focus:outline-none my-1"
+              className="w-full text-center py-3 rounded bg-green-500 font-bold text-white hover:bg-green-dark focus:outline-none my-1"
               onClick={handleSubmit}
             >
               Create Account
@@ -101,7 +100,7 @@ export default function Signup() {
             </div>
             <div className="flex justify-center items-center">
               <button
-                className="flex gap-3 shadow-md py-3 px-2 rounded-lg items-center font-bold pr-3 cursor-pointer text-black"
+                className="flex gap-3 shadow-md justify-center py-3 px-2 rounded-lg items-center font-bold pr-3 cursor-pointer bg-white w-full"
                 onClick={handleGoogleSignIn}
               >
                 <FcGoogle className="text-3xl" />
