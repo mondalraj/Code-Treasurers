@@ -4,7 +4,7 @@ import { Notify } from "notiflix/build/notiflix-notify-aio";
 const TextQuestionTemplate = ({ questionsList, setQuestionsList }) => {
   const [question, setQuestion] = useState("");
   const [KeywordsList, setKeywordsList] = useState(["", "", "", ""]);
-  const [timeLimit, setTimeLimit] = useState();
+  const [timeLimit, setTimeLimit] = useState(10);
   const [marks, setMarks] = useState(1);
   const handleServiceChange = (e, index) => {
     const { name, value } = e.target;
@@ -41,7 +41,7 @@ const TextQuestionTemplate = ({ questionsList, setQuestionsList }) => {
       });
       return;
     }
-    if (timeLimit <= 10) {
+    if (timeLimit < 10) {
       Notify.failure("Give proper time limit", {
         position: "right-bottom",
       });
@@ -68,7 +68,7 @@ const TextQuestionTemplate = ({ questionsList, setQuestionsList }) => {
 
     setQuestion("");
     setKeywordsList(["", "", "", ""]);
-    setTimeLimit(0);
+    setTimeLimit(10);
     setMarks(1);
     // console.log(questionSchema);
   };
@@ -132,11 +132,11 @@ const TextQuestionTemplate = ({ questionsList, setQuestionsList }) => {
           <div className="flex items-end gap-2">
             <input
               type="number"
-              placeholder="Type here (Optional)"
+              placeholder="Type here"
               class="input input-bordered w-full max-w-xs"
               value={timeLimit}
               onChange={(e) => setTimeLimit(e.target.value)}
-              min="0"
+              min="10"
               max="300"
             />
             <div>in seconds.</div>

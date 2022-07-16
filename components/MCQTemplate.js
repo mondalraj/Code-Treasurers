@@ -4,7 +4,7 @@ import { Notify } from "notiflix/build/notiflix-notify-aio";
 const MCQTemplate = ({ questionsList, setQuestionsList }) => {
   const [optionsList, setOptionsList] = useState(["", ""]);
   const [question, setQuestion] = useState("");
-  const [timeLimit, setTimeLimit] = useState();
+  const [timeLimit, setTimeLimit] = useState(10);
   const [marks, setMarks] = useState(1);
   const [answer, setAnswer] = useState(0);
 
@@ -44,7 +44,7 @@ const MCQTemplate = ({ questionsList, setQuestionsList }) => {
       });
       return;
     }
-    if (timeLimit <= 10) {
+    if (timeLimit < 10) {
       Notify.failure("Give proper time limit", {
         position: "right-bottom",
       });
@@ -73,7 +73,7 @@ const MCQTemplate = ({ questionsList, setQuestionsList }) => {
     setQuestion("");
     setOptionsList(["", ""]);
     setAnswer(0);
-    setTimeLimit(0);
+    setTimeLimit(10);
     setMarks(1);
     // console.log(questionSchema);
   };
@@ -134,11 +134,11 @@ const MCQTemplate = ({ questionsList, setQuestionsList }) => {
           <div className="flex items-end gap-2">
             <input
               type="number"
-              placeholder="Type here (Optional)"
+              placeholder="Type here"
               class="input input-bordered w-full max-w-xs"
               value={timeLimit}
               onChange={(e) => setTimeLimit(e.target.value)}
-              min="0"
+              min="10"
               max="300"
             />
             <div>in seconds.</div>
