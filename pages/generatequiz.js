@@ -10,7 +10,7 @@ export default function Generatequiz() {
   //   console.log(questionsList);
 
   return (
-    <div>
+    <DashboardLayout>
       <div className="flex justify-between items-center">
         <div className="text-3xl font-semibold">Generate New Quiz</div>
         <button class="btn btn-success">Generate Quiz</button>
@@ -47,10 +47,7 @@ export default function Generatequiz() {
           />
         )}
       </div>
-    </div>
+    </DashboardLayout>
   );
 }
 
-Generatequiz.getLayout = function getLayout(page) {
-  return <DashboardLayout>{page}</DashboardLayout>;
-};
