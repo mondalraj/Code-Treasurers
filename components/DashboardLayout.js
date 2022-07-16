@@ -15,7 +15,7 @@ export default function DashboardLayout({ children }) {
         <div className="space-y-2">
           <Link href="/dashboard">
             <button
-              class={`btn ${
+              className={`btn ${
                 router.pathname === "/dashboard"
                   ? "btn-active btn-secondary"
                   : ""
@@ -26,7 +26,7 @@ export default function DashboardLayout({ children }) {
           </Link>
           <Link href="/generatequiz">
             <button
-              class={`btn ${
+              className={`btn ${
                 router.pathname === "/generatequiz"
                   ? "btn-active btn-secondary"
                   : ""
@@ -37,7 +37,7 @@ export default function DashboardLayout({ children }) {
           </Link>
           <Link href="/quizresults">
             <button
-              class={`btn ${
+              className={`btn ${
                 router.pathname === "/quizresults"
                   ? "btn-active btn-secondary"
                   : ""
@@ -48,7 +48,7 @@ export default function DashboardLayout({ children }) {
           </Link>
         </div>
         <div className="mb-2">
-          <button class="btn btn-outline btn-block text-red-500">
+          <button className="btn btn-outline btn-block text-red-500">
             Logout, Rajib
           </button>
         </div>
