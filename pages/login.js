@@ -1,19 +1,57 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { UserAuth } from "../AuthContext";
 import { useRouter } from "next/router";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from '../firebase-config.js';
+import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
+
 export default function Login() {
-    const { googleSignIn, user } = UserAuth();
     const router = useRouter();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    // onAuthStateChanged(auth, (currentUser) => {
+    //     console.log(currentUser);
+    //     if(currentUser){
+    //       router.push('/dashboard');
+    //     }else{
+    //       router.push('/login');
+    //     }
+    //     // if(!currentUser){
+    //     //   // setUser(currentUser);
+    //     //   router.push("/login");
+    //     //   // console.log('User', currentUser);
+    //     // }
+    // });
+
     const handleGoogleSignIn = async () => {
       try {
-        await googleSignIn();
-        router.push("/dashboard")
-
+        const provider = new GoogleAuthProvider();
+        const cred = await signInWithPopup(auth, provider);
+        localStorage.setItem("idToken", cred._tokenResponse.idToken);
       } catch (error) {
-        console.log(error);
+        console.error(error.message);
       }
     };
+
+    const handleSubmit = async () => {
+      try {
+        const response = await fetch('/api/loginWithEmail', {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'email': email,
+            'password': password,
+          }
+        });
+        const data = await response.json();
+        localStorage.setItem("idToken", data.user._tokenResponse.idToken);
+        if(data.success) { router.push("/dashboard") }
+        console.log("Email data: ", response);
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
   
 
   return (
@@ -28,6 +66,8 @@ export default function Login() {
               className="block border border-grey-light w-full p-3 rounded mb-4"
               name="email"
               placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <input
@@ -35,6 +75,8 @@ export default function Login() {
               className="block border border-grey-light w-full p-3 rounded mb-4"
               name="password"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
             <div className="text-gray-500 flex justify-end mb-3">
@@ -51,6 +93,7 @@ export default function Login() {
             <button
               type="submit"
               className="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-dark focus:outline-none my-1"
+              onClick={handleSubmit}
             >
               Login
             </button>
