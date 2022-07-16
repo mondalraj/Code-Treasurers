@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
 
 export default function QuizComponent({
@@ -15,6 +15,18 @@ export default function QuizComponent({
     setMyAnswer(answer);
     console.log(answer);
   };
+
+  // useEffect(() => {
+  //   let counter = 99;
+  //   setInterval(() => {
+  //     if (counter >= 0) {
+  //       counter--;
+  //     }
+  //     document
+  //       .getElementById("counterElement")
+  //       .style.setProperty("--value", counter);
+  //   }, 1000);
+  // }, []);
 
   return (
     <>
@@ -57,7 +69,11 @@ export default function QuizComponent({
                 </div>
               </>
             )}
-           
+
+            {/* <span class="countdown font-mono text-6xl">
+              <span id="counterElement"></span>
+            </span> */}
+
             {/* <div className="flex justify-center mt-5">
               <input
                 type="submit"
