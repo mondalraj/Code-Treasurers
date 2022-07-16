@@ -5,6 +5,9 @@ import TextQuestionTemplate from "../components/TextQuestionTemplate";
 
 export default function Generatequiz() {
   const [selectedQustionType, setSelectedQustionType] = useState("select");
+  const [questionsList, setQuestionsList] = useState([]);
+
+  //   console.log(questionsList);
 
   return (
     <div>
@@ -31,8 +34,18 @@ export default function Generatequiz() {
         </div>
       </div>
       <div className="mt-6">
-        {selectedQustionType === "mcq" && <MCQTemplate />}
-        {selectedQustionType === "text" && <TextQuestionTemplate />}
+        {selectedQustionType === "mcq" && (
+          <MCQTemplate
+            questionsList={questionsList}
+            setQuestionsList={setQuestionsList}
+          />
+        )}
+        {selectedQustionType === "text" && (
+          <TextQuestionTemplate
+            questionsList={questionsList}
+            setQuestionsList={setQuestionsList}
+          />
+        )}
       </div>
     </div>
   );

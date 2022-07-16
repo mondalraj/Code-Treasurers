@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 
-const MCQTemplate = () => {
-  const [optionsList, setOptionsList] = useState([
-    { option: "" },
-    { option: "" },
-  ]);
+const MCQTemplate = ({ questionsList, setQuestionsList }) => {
+  const [optionsList, setOptionsList] = useState(["", ""]);
   const [question, setQuestion] = useState("");
-  const [timeLimit, setTimeLimit] = useState();
-  const [marks, setMarks] = useState();
+  const [timeLimit, setTimeLimit] = useState(0);
+  const [marks, setMarks] = useState(0);
   const [answer, setAnswer] = useState(0);
 
   const handleServiceChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...optionsList];
-    list[index][name] = value;
+    list[index] = value;
     setOptionsList(list);
   };
 
@@ -24,7 +21,7 @@ const MCQTemplate = () => {
   };
 
   const handleServiceAdd = () => {
-    setOptionsList([...optionsList, { option: "" }]);
+    setOptionsList([...optionsList, ""]);
   };
 
   const submitQuestion = () => {
@@ -36,7 +33,13 @@ const MCQTemplate = () => {
       timeInterval: timeLimit ? timeLimit : 0,
       marks: marks,
     };
-    console.log(questionSchema);
+    setQuestionsList([...questionsList, questionSchema]);
+    setQuestion("");
+    setOptionsList(["", ""]);
+    setAnswer(0);
+    setTimeLimit(0);
+    setMarks(0);
+    // console.log(questionSchema);
   };
   return (
     <div className="w-2/3 pb-16">
@@ -120,7 +123,7 @@ const MCQTemplate = () => {
             {optionsList.map((singleOption, index) => {
               return (
                 <option key={index} value={index + 1}>
-                  {index + 1} . {singleOption.option}
+                  {index + 1} . {singleOption}
                 </option>
               );
             })}

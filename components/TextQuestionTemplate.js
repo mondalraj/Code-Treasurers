@@ -1,6 +1,6 @@
 import React from "react";
 
-const TextQuestionTemplate = () => {
+const TextQuestionTemplate = ({ questionsList, setQuestionsList }) => {
   return <div>TextQuestionTemplate</div>;
 };
 
