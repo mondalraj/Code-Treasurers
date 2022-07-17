@@ -14,7 +14,8 @@ export default function Generatequiz() {
 
   const generateQuiz = async () => {
     setAdminId(localStorage.getItem('admin'));
-    setQuizId(uuid());
+    const id = uuid();
+    setQuizId(id);
     if (questionsList.length == 0) {
       Notify.failure("Write Atleast 1 Question", {
         position: "right-bottom",
@@ -28,7 +29,7 @@ export default function Generatequiz() {
         admin_id: adminId,
       },
       body: JSON.stringify({
-        id: quizId,
+        id: id,
         admin_id: adminId,
         questionsList,
         isActive: true,
