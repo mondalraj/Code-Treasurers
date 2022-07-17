@@ -7,19 +7,56 @@ import TextQuestionTemplate from "../components/TextQuestionTemplate";
 export default function Generatequiz() {
   const [selectedQustionType, setSelectedQustionType] = useState("select");
   const [questionsList, setQuestionsList] = useState([]);
+  const [quizGenerated, setQuizGenerated] = useState(false);
 
-  const generateQuiz = () => {
+  const generateQuiz = async () => {
     if (questionsList.length == 0) {
       Notify.failure("Write Atleast 1 Question", {
         position: "right-bottom",
       });
       return;
     }
-    console.log(questionsList);
+    await fetch("/api/generateRetrieveQuiz", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        admin_id: "Fl7tmAtPBRP4cv6u4Beu",
+        // quiz_id: "quiz_id",
+      },
+      body: JSON.stringify({
+        id: "quiz_id2",
+        admin_id: "Fl7tmAtPBRP4cv6u4Beu",
+        questionsList,
+        isActive: true,
+        passPercent: 50,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setQuizGenerated(true);
+      })
+      .catch((err) => console.log(err));
+    // console.log(questionsList);
   };
 
   return (
     <DashboardLayout>
+      {quizGenerated ? (
+        <div class="toast toast-top toast-center">
+          <div class="alert alert-info">
+            <div>
+              <div>Quiz Successfully Generated</div>
+              <a
+                href={`/quiz/${"Fl7tmAtPBRP4cv6u4Beu"}/${"quiz_id1"}`}
+                className="underline"
+              >{`http:localhost:3000/quiz/${"Fl7tmAtPBRP4cv6u4Beu"}/${"quiz_id1"}`}</a>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
       <div className="flex justify-between items-center">
         <div className="text-3xl font-semibold">Generate New Quiz</div>
         <button class="btn btn-success" onClick={generateQuiz}>

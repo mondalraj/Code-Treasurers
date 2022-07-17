@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import QuizComponent from "../../components/QuizComponent";
+import QuizComponent from "../../../components/QuizComponent";
 
 const Quizid = () => {
   const [quiz, setQuiz] = useState(false);
@@ -32,7 +32,7 @@ const Quizid = () => {
   ];
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [nextQuestion, setNextQuestion] = useState(false);
-  const [endQuiz, setEndQuiz] =useState(false);
+  const [endQuiz, setEndQuiz] = useState(false);
   let index = 0;
   const getFunction = (interval) => {
     // setCurrentQuestion(QuizQuestions[++index]);
@@ -47,11 +47,11 @@ const Quizid = () => {
     }
     if (nextQuestion == true) {
       console.log(nextQuestion);
-      if (currentQuestion < QuizQuestions.length-1) {
+      if (currentQuestion < QuizQuestions.length - 1) {
         console.log(currentQuestion);
         setCurrentQuestion(currentQuestion + 1);
-      }else{
-        setEndQuiz(true)
+      } else {
+        setEndQuiz(true);
       }
       setNextQuestion(false);
     }
@@ -65,7 +65,7 @@ const Quizid = () => {
           timer={QuizQuestions[currentQuestion].timeInterval}
           currentQuestion={QuizQuestions[currentQuestion]}
           setNextQuestion={setNextQuestion}
-          endQuiz = {endQuiz}
+          endQuiz={endQuiz}
         />
       ) : (
         <div className="flex justify-center items-center h-screen">
