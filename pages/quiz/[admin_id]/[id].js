@@ -89,7 +89,9 @@ const Quizid = () => {
             admin_id: admin_id,
           },
           body: JSON.stringify({
-            
+            quiz_details: {
+              
+            }
           })
         });
         console.log("Quiz Ended");

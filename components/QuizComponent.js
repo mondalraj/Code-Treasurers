@@ -99,6 +99,10 @@ export default function QuizComponent({
               </>
             )}
 
+            {/* <span className="countdown font-mono text-6xl">
+              <span id="counterElement"></span>
+            </span> */}
+
             {/* <div className="flex justify-center mt-5">
               <input
                 type="submit"

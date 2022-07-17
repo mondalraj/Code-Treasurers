@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import DashboardQuizCard from "../components/DashboardActiveQuizCard";
 import DashboardPastQuizCard from "../components/DashboardPastQuizCard";
 
 export default function Dashboard() {
+  // useEffect(() => {
+  //   fetch("/api/getAllAdminData", {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         admin_id: "klvU4NDgbRkw8D1QPRzF",
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => console.log(data));
+  // },[])
   return (
     <div>
       <DashboardLayout>
