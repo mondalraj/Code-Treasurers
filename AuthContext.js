@@ -29,9 +29,9 @@ export const AuthContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if(currentUser){
         setUser(currentUser);
-        setAdminId(localStorage.getItem('admin'));
-        router.push(`/dashboard?id=${adminId}`);
-        // console.log('User', currentUser);
+        let AdminId = localStorage.getItem('admin');
+        setAdminId(AdminId);
+        if(adminId) router.push(`/dashboard?id=${adminId}`);
       }
     });
     return () => {
