@@ -18,7 +18,7 @@ export default function handler(req, res) {
       });
   } else if (req.method === "GET") {
     const { admin_id, quiz_id } = req.headers;
-    const resultRef = query(resultCollection, quiz_id);
+    const resultRef = doc(resultCollection, quiz_id);
     getDoc(resultRef).then((doc) => {
       res.status(200).json({ status: "success", data: doc.data(), id: doc.id });
     });

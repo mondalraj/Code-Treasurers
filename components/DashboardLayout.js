@@ -2,32 +2,21 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { auth } from '../firebase-config.js';
 import { signOut,getAuth,onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function DashboardLayout({ children }) {
   const router = useRouter();
 
+  const [id,setId] = useState('');
+
   useEffect(() => {
     const token = localStorage.getItem("idToken");
-    // getAuth().verifyIdToken(token)
-    // .then((decodedToken) => {
-    // const uid = decodedToken.uid;
-    // console.log(uid);
-    // })
-    // .catch((error) => {
-    //   router.push('/login');
-    // });
-    // const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-    //   if(!currentUser){
-    //     router.push('/login');
-    //   }
-    // });
-    // return () => {
-    //   unsubscribe();
-    // };
+    setId(localStorage.getItem("admin"));
+    if(!token) router.push('/login');
   }, []);
 
   const clickHandler = () => {
+    localStorage.removeItem("idToken");
     signOut(auth).then((data) => router.push("/login"));
   }
 
@@ -41,10 +30,10 @@ export default function DashboardLayout({ children }) {
         </Link>
 
         <div className="space-y-2">
-          <Link href="/dashboard">
+          <Link href={`/dashboard?id=${id}`}>
             <button
               className={`btn ${
-                router.pathname === "/dashboard"
+                router.pathname === `/dashboard`
                   ? "btn-active btn-secondary"
                   : ""
               } btn-block`}
@@ -52,10 +41,10 @@ export default function DashboardLayout({ children }) {
               Dashboard
             </button>
           </Link>
-          <Link href="/generatequiz">
+          <Link href={`/generatequiz?id=${id}`}>
             <button
               className={`btn ${
-                router.pathname === "/generatequiz"
+                router.pathname === `/generatequiz`
                   ? "btn-active btn-secondary"
                   : ""
               } btn-block`}
@@ -63,10 +52,10 @@ export default function DashboardLayout({ children }) {
               Generate Quiz
             </button>
           </Link>
-          <Link href="/quizresults">
+          <Link href={`/quizresults?id=${id}`}>
             <button
               className={`btn ${
-                router.pathname === "/quizresults"
+                router.pathname === `/quizresults`
                   ? "btn-active btn-secondary"
                   : ""
               } btn-block`}

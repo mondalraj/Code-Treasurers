@@ -1,14 +1,26 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import DashboardLayout from "../../components/DashboardLayout";
 
 const QuizResultById = () => {
+  useEffect(() => {
+    fetch("/api/generateRetrieveResult", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          admin_id: "klvU4NDgbRkw8D1QPRzF",
+          quiz_id: "quiz_id1",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+  },[]);
   const status1 = "fail";
   const status2 = "pass";
   const status3 = "fail";
   return (
     <DashboardLayout>
-      <div class="text-lg breadcrumbs">
+      <div className="text-lg breadcrumbs">
         <ul>
           <li className="text-info">
             <Link href="/quizresults">Quiz Results</Link>
@@ -19,8 +31,8 @@ const QuizResultById = () => {
 
       <div className="text-3xl font-semibold mt-5">Results for Quiz #1234</div>
 
-      <div class="overflow-x-auto mt-5">
-        <table class="table table-zebra table-compact w-full">
+      <div className="overflow-x-auto mt-5">
+        <table className="table table-zebra table-compact w-full">
           <thead>
             <tr>
               <th>ID</th>
