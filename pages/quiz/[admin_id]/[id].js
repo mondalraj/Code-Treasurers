@@ -62,7 +62,7 @@ const Quizid = () => {
   let i = quizData?.length;
 
   useEffect(() => {
-    localStorage.setItem("quizStart",false);
+    localStorage.setItem("quizStart", false);
     if (localStorage.getItem("quizStart") == true) {
       setQuiz(true);
     }
@@ -76,11 +76,11 @@ const Quizid = () => {
       setNextQuestion(false);
     }
   }, [nextQuestion, quiz]);
-  
+
   // let quiz_details = []
 
-  useEffect(()=> {
-    if(endQuiz == true){
+  useEffect(() => {
+    if (endQuiz == true) {
       const postQuizQuestions = async () => {
         const { admin_id, id } = router.query;
         const response = await fetch("/api/generateRetrieveResult", {
@@ -95,18 +95,20 @@ const Quizid = () => {
               id: "#",
               name: localStorage.getItem("name"),
               score: localStorage.getItem("score"),
-              attempted: localStorage.getItem("attempted")
-            }
-          })
+              attempted: localStorage.getItem("attempted"),
+            },
+          }),
         });
         console.log("Quiz Ended");
-      }
-      postQuizQuestions()
+      };
+      postQuizQuestions();
     }
-
-  }, [endQuiz, router.query])
+  }, [endQuiz, router.query]);
 
   useEffect(() => {
+    if (!router.isReady) {
+      return;
+    }
     const fetchQuizQuestions = async () => {
       const { admin_id, id } = router.query;
       console.log(admin_id);
@@ -131,17 +133,15 @@ const Quizid = () => {
 
   // console.log(quizData);
 
-
   return (
     <>
       {quiz === true ? (
         <QuizComponent
           currentQuestion={quizData[currentQuestion]}
-          index = {currentQuestion}
+          index={currentQuestion}
           setNextQuestion={setNextQuestion}
           endQuiz={endQuiz}
           i={i}
-
         />
       ) : (
         <div className="flex justify-center items-center h-screen">

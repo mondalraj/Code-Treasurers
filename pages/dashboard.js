@@ -6,8 +6,8 @@ import DashboardPastQuizCard from "../components/DashboardPastQuizCard";
 export default function Dashboard() {
   const [allData,setAllData] = useState([]);
   useEffect(() => {
+    // console.log(id);
     const id = localStorage.getItem("admin");
-    console.log(id);
     fetch("/api/getAllAdminData", {
         method: "GET",
         headers: {
@@ -27,9 +27,9 @@ export default function Dashboard() {
         <div className="w-full mt-8">
           <div className="text-xl">Active Quizes</div>
           <div className="mt-4 flex flex-wrap gap-4">
-            {allData?.map((data) => {
+            {allData?.map((data,index) => {
                 return (
-                  <DashboardQuizCard data={data} />
+                  <DashboardQuizCard key = {index} data={data} />
                 )
             })}
           </div>
