@@ -1,3 +1,4 @@
+import { current } from "daisyui/src/colors";
 import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
 
@@ -7,6 +8,7 @@ export default function QuizComponent({
   currentQuestion,
   setNextQuestion,
   endQuiz,
+  i,
 }) {
   const options = ["a", "b", "c", "d"];
   const [myAnswer, setMyAnswer] = useState("");
@@ -16,17 +18,25 @@ export default function QuizComponent({
     console.log(answer);
   };
 
-  // useEffect(() => {
-  //   let counter = 99;
-  //   setInterval(() => {
-  //     if (counter >= 0) {
-  //       counter--;
-  //     }
-  //     document
-  //       .getElementById("counterElement")
-  //       .style.setProperty("--value", counter);
-  //   }, 1000);
-  // }, []);
+  console.log(currentQuestion);
+
+  useEffect(() => {
+    let counter = currentQuestion.timeInterval;
+    const interval = setInterval(() => {
+      if (counter >= 0) {
+        counter--;
+      }
+      if (currentQuestion.index < i-1) {
+        document
+          .getElementById("counterElement")
+          .style.setProperty("--value", counter);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [currentQuestion.timeInterval]);
 
   return (
     <>
@@ -38,8 +48,12 @@ export default function QuizComponent({
             ) : (
               <>
                 <div className="flex justify-between">
-                  <h2 className="card-title text-black">Question 1</h2>
-                  <Countdown key={5} date={Date.now() + timer * 1000} />
+                  <h2 className="card-title text-black">
+                    Question {currentQuestion.index + 1}
+                  </h2>
+                  <span className="countdown font-mono text-6xl">
+                    <span id="counterElement"></span>
+                  </span>
                 </div>
                 <p className="text-black">{currentQuestion.question}</p>
                 <div className="card-actions flex flex-col mt-3">
@@ -69,10 +83,6 @@ export default function QuizComponent({
                 </div>
               </>
             )}
-
-            {/* <span class="countdown font-mono text-6xl">
-              <span id="counterElement"></span>
-            </span> */}
 
             {/* <div className="flex justify-center mt-5">
               <input

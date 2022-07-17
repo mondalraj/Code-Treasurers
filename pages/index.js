@@ -48,23 +48,20 @@ export default function Home() {
     //   .then((res) => res.json())
     //   .then((data) => console.log(data));
 
-    let counter = 99;
-    setInterval(() => {
-      if (counter >= 0) {
-        counter--;
-      }
-      document
-        .getElementById("counterElement")
-        .style.setProperty("--value", counter);
-    }, 1000);
+  //   let counter = 99;
+  //   setInterval(() => {
+  //     if (counter >= 0) {
+  //       counter--;
+  //     }
+  //     document
+  //       .getElementById("counterElement")
+  //       .style.setProperty("--value", counter);
+  //   }, 1000);
   }, []);
 
   return (
     <div>
       <h1 className="text-orange-700 text-2xl">Hello Next.js</h1>
-      <span class="countdown font-mono text-6xl">
-        <span id="counterElement"></span>
-      </span>
     </div>
   );
 }
