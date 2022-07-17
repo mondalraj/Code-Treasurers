@@ -13,22 +13,6 @@ export default function DashboardLayout({ children }) {
     const token = localStorage.getItem("idToken");
     setId(localStorage.getItem("admin"));
     if(!token) router.push('/login');
-    // getAuth().verifyIdToken(token)
-    // .then((decodedToken) => {
-    // const uid = decodedToken.uid;
-    // console.log(uid);
-    // })
-    // .catch((error) => {
-    //   router.push('/login');
-    // });
-    // const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-    //   if(!currentUser){
-    //     router.push('/login');
-    //   }
-    // });
-    // return () => {
-    //   unsubscribe();
-    // };
   }, []);
 
   const clickHandler = () => {
