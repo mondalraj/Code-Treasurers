@@ -3,13 +3,18 @@ import { Notify } from "notiflix/build/notiflix-notify-aio";
 import DashboardLayout from "../components/DashboardLayout";
 import MCQTemplate from "../components/MCQTemplate";
 import TextQuestionTemplate from "../components/TextQuestionTemplate";
+import { uuid } from "uuidv4";
 
 export default function Generatequiz() {
   const [selectedQustionType, setSelectedQustionType] = useState("select");
   const [questionsList, setQuestionsList] = useState([]);
   const [quizGenerated, setQuizGenerated] = useState(false);
+  const [adminId, setAdminId] = useState('');
+  const [quizId, setQuizId] = useState('');
 
   const generateQuiz = async () => {
+    setAdminId(localStorage.getItem('admin'));
+    setQuizId(uuid());
     if (questionsList.length == 0) {
       Notify.failure("Write Atleast 1 Question", {
         position: "right-bottom",
@@ -20,12 +25,11 @@ export default function Generatequiz() {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        admin_id: "6cvo5ttJujPbcHx4yq7w",
-        // quiz_id: "quiz_id",
+        admin_id: adminId,
       },
       body: JSON.stringify({
-        id: "quiz_id2",
-        admin_id: "6cvo5ttJujPbcHx4yq7w",
+        id: quizId,
+        admin_id: adminId,
         questionsList,
         isActive: true,
         passPercent: 50,
@@ -47,9 +51,9 @@ export default function Generatequiz() {
             <div>
               <div>Quiz Successfully Generated</div>
               <a
-                href={`/quiz/${"Fl7tmAtPBRP4cv6u4Beu"}/${"quiz_id1"}`}
+                href={`/quiz/${adminId}/${quizId}`}
                 className="underline"
-              >{`http:localhost:3000/quiz/${"Fl7tmAtPBRP4cv6u4Beu"}/${"quiz_id1"}`}</a>
+              >{`http:localhost:3000/quiz/${adminId}/${quizId}`}</a>
             </div>
           </div>
         </div>
