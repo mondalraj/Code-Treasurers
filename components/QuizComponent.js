@@ -70,7 +70,7 @@ export default function QuizComponent({
               </>
             )}
 
-            {/* <span class="countdown font-mono text-6xl">
+            {/* <span className="countdown font-mono text-6xl">
               <span id="counterElement"></span>
             </span> */}
 

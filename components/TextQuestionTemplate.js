@@ -75,19 +75,19 @@ const TextQuestionTemplate = ({ questionsList, setQuestionsList }) => {
 
   return (
     <div className="w-2/3 pb-16">
-      <div class="form-control w-full">
-        <label class="label">
-          <span class="label-text">Write down the Question?*</span>
+      <div className="form-control w-full">
+        <label className="label">
+          <span className="label-text">Write down the Question?*</span>
         </label>
         <textarea
-          class="textarea textarea-bordered  w-full"
+          className="textarea textarea-bordered  w-full"
           placeholder="Type here"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
         ></textarea>
         <div className="bg-slate-600 h-px w-full my-5"></div>
-        <label class="label">
-          <span class="label-text">
+        <label className="label">
+          <span className="label-text">
             List down the Keywords you expect in the answer (Max 10 Keywords)*
           </span>
         </label>
@@ -100,14 +100,14 @@ const TextQuestionTemplate = ({ questionsList, setQuestionsList }) => {
                 id="option"
                 name="option"
                 placeholder="Type here"
-                class="input input-bordered w-full"
+                className="input input-bordered w-full"
                 value={singleService}
                 onChange={(e) => handleServiceChange(e, index)}
                 required
               />
               {KeywordsList.length !== 4 && (
                 <button
-                  class="btn btn-outline btn-error"
+                  className="btn btn-outline btn-error"
                   onClick={() => handleServiceRemove(index)}
                 >
                   Remove
@@ -116,7 +116,7 @@ const TextQuestionTemplate = ({ questionsList, setQuestionsList }) => {
             </div>
             <div className="second-division my-2">
               {KeywordsList.length - 1 === index && KeywordsList.length < 10 && (
-                <button class="btn" onClick={handleServiceAdd}>
+                <button className="btn" onClick={handleServiceAdd}>
                   Add an Option
                 </button>
               )}
@@ -124,8 +124,8 @@ const TextQuestionTemplate = ({ questionsList, setQuestionsList }) => {
           </div>
         ))}
         <div>
-          <label class="label">
-            <span class="label-text">
+          <label className="label">
+            <span className="label-text">
               What is the Time Limit for this Question?*
             </span>
           </label>
@@ -133,7 +133,7 @@ const TextQuestionTemplate = ({ questionsList, setQuestionsList }) => {
             <input
               type="number"
               placeholder="Type here"
-              class="input input-bordered w-full max-w-xs"
+              className="input input-bordered w-full max-w-xs"
               value={timeLimit}
               onChange={(e) => setTimeLimit(e.target.value)}
               min="10"
@@ -143,8 +143,8 @@ const TextQuestionTemplate = ({ questionsList, setQuestionsList }) => {
           </div>
         </div>
         <div className="my-2">
-          <label class="label">
-            <span class="label-text">
+          <label className="label">
+            <span className="label-text">
               How many marks does this question carry?*
             </span>
           </label>
@@ -152,7 +152,7 @@ const TextQuestionTemplate = ({ questionsList, setQuestionsList }) => {
             <input
               type="number"
               placeholder="Type here"
-              class="input input-bordered w-full max-w-xs"
+              className="input input-bordered w-full max-w-xs"
               value={marks}
               onChange={(e) => setMarks(e.target.value)}
               min="1"
@@ -162,7 +162,7 @@ const TextQuestionTemplate = ({ questionsList, setQuestionsList }) => {
         </div>
         <div className="relative">
           <button
-            class="btn btn-info absolute right-0"
+            className="btn btn-info absolute right-0"
             onClick={submitQuestion}
           >
             Add Question

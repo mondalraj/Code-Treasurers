@@ -13,6 +13,7 @@ const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
+  const [adminId, setAdminId] = useState('');
   const router = useRouter();
   const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();
@@ -34,14 +35,15 @@ export const AuthContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if(currentUser){
         setUser(currentUser);
-        router.push("/dashboard");
-        console.log('User', currentUser);
+        setAdminId(localStorage.getItem('admin'));
+        router.push(`/dashboard?id=${adminId}`);
+        // console.log('User', currentUser);
       }
     });
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [adminId]);
 
   return (
     <AuthContext.Provider value={{ googleSignIn, logOut, user }}>

@@ -1,17 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
+import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
+import { auth } from "../firebase-config";
 
 export default function Signup() {
   const router = useRouter();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const getAdmin = async (email,displayname) => {
+    try {
+      const response = await fetch('/api/addAdmin', {
+        method: 'POST',
+        body: JSON.stringify({
+          email:email,
+          name:displayname,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error.message);
+      return null;
+    }
+  }
 
   const handleGoogleSignIn = async () => {
     try {
       const provider = new GoogleAuthProvider();
       const cred = await signInWithPopup(auth, provider);
       localStorage.setItem("idToken", cred._tokenResponse.idToken);
+      const admin = await getAdmin(cred.user.email,cred.user.displayName);
+      localStorage.setItem('admin', admin.user._key.path.segments[1]);
     } catch (error) {
       console.error(error.message);
     }
@@ -30,9 +55,10 @@ export default function Signup() {
         }
       });
       const data = await response.json();
-      console.log(data);
+      const admin = await getAdmin(email,name);
+      let adminId = localStorage.setItem('admin', admin.user._key.path.segments[1]);
       localStorage.setItem("idToken", data.user._tokenResponse.idToken);
-      if(data.success) { router.push("/dashboard") }
+      if(data.success) { router.push(`/dashboard?id=${adminId}`) }
     } catch (error) {
       console.error(error.message);
     }
@@ -51,6 +77,8 @@ export default function Signup() {
               className="block border border-grey-light w-full p-3 rounded mb-4"
               name="fullname"
               placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
 
             <input

@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { UserAuth } from "../AuthContext";
 
 const Protected = ({ children }) => {
-  const  {user} = UserAuth();
+  const {user} = UserAuth();
   const router = useRouter();
 
   useEffect(() => {
