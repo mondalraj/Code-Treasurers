@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
-import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase-config";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 
 export default function Signup() {
   const router = useRouter();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [focused, setFocused] = useState(false);
 
-  const getAdmin = async (email,displayname) => {
+  const getAdmin = async (email, displayname) => {
     try {
-      const response = await fetch('/api/addAdmin', {
-        method: 'POST',
+      const response = await fetch("/api/addAdmin", {
+        method: "POST",
         body: JSON.stringify({
-          email:email,
-          name:displayname,
+          email: email,
+          name: displayname,
         }),
         headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        }
+          "Content-type": "application/json; charset=UTF-8",
+        },
       });
       const data = await response.json();
       return data;
@@ -31,15 +33,15 @@ export default function Signup() {
       });
       return null;
     }
-  }
+  };
 
   const handleGoogleSignIn = async () => {
     try {
       const provider = new GoogleAuthProvider();
       const cred = await signInWithPopup(auth, provider);
       localStorage.setItem("idToken", cred._tokenResponse.idToken);
-      const admin = await getAdmin(cred.user.email,cred.user.displayName);
-      localStorage.setItem('admin', admin.user._key.path.segments[1]);
+      const admin = await getAdmin(cred.user.email, cred.user.displayName);
+      localStorage.setItem("admin", admin.user._key.path.segments[1]);
     } catch (error) {
       Notify.failure("Something went wrong", {
         position: "top-right",
@@ -48,37 +50,48 @@ export default function Signup() {
   };
 
   const handleSubmit = async () => {
+    if (password !== confirmPassword) {
+      Notify.failure("Passwords do not match", {
+        position: "top-right",
+      });
+      return;
+    }
     try {
-      const response = await fetch('/api/loginWithEmail', {
-        method: 'POST',
+      const response = await fetch("/api/loginWithEmail", {
+        method: "POST",
         body: JSON.stringify({
-          email:email,
-          password:password,
+          email: email,
+          password: password,
         }),
         headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        }
+          "Content-type": "application/json; charset=UTF-8",
+        },
       });
       const data = await response.json();
-      const admin = await getAdmin(email,name);
-      let adminId = localStorage.setItem('admin', admin.user._key.path.segments[1]);
+      const admin = await getAdmin(email, name);
+      let adminId = localStorage.setItem(
+        "admin",
+        admin.user._key.path.segments[1]
+      );
       localStorage.setItem("idToken", data.user._tokenResponse.idToken);
-      if(data.success) { router.push(`/dashboard?id=${adminId}`) }
+      if (data.success) {
+        router.push(`/dashboard?id=${adminId}`);
+      }
     } catch (error) {
       Notify.failure("Something went wrong", {
         position: "top-right",
       });
     }
-  }
-
-
+  };
 
   return (
     <>
       <div className="min-h-screen flex flex-col">
         <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
           <div className="bg-neutral px-6 py-8 rounded shadow-md text-black w-full">
-            <h1 className="mb-8 text-3xl text-center text-white">Admin Sign up</h1>
+            <h1 className="mb-8 text-3xl text-center text-white">
+              Admin Sign up
+            </h1>
             <input
               type="text"
               className="block border border-grey-light w-full p-3 rounded mb-4"
@@ -110,6 +123,10 @@ export default function Signup() {
               className="block border border-grey-light w-full p-3 rounded mb-4"
               name="confirm_password"
               placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+              }}
             />
             <div className="text-gray-200 flex justify-end mb-3">
               Already have an account?

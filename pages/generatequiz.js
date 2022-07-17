@@ -6,14 +6,14 @@ import TextQuestionTemplate from "../components/TextQuestionTemplate";
 import { uuid } from "uuidv4";
 
 export default function Generatequiz() {
-  const [selectedQustionType, setSelectedQustionType] = useState("select");
+  const [selectedQustionType, setSelectedQustionType] = useState("mcq");
   const [questionsList, setQuestionsList] = useState([]);
   const [quizGenerated, setQuizGenerated] = useState(false);
-  const [adminId, setAdminId] = useState('');
-  const [quizId, setQuizId] = useState('');
+  const [adminId, setAdminId] = useState("");
+  const [quizId, setQuizId] = useState("");
 
   const generateQuiz = async () => {
-    setAdminId(localStorage.getItem('admin'));
+    setAdminId(localStorage.getItem("admin"));
     const id = uuid();
     setQuizId(id);
     if (questionsList.length == 0) {
@@ -82,7 +82,7 @@ export default function Generatequiz() {
               Pick one
             </option>
             <option value="mcq">Multiple Choice Question</option>
-            <option value="text">Text Question</option>
+            {/* <option value="text">Text Question</option> */}
           </select>
         </div>
       </div>
