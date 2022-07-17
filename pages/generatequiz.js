@@ -22,17 +22,17 @@ export default function Generatequiz() {
     <DashboardLayout>
       <div className="flex justify-between items-center">
         <div className="text-3xl font-semibold">Generate New Quiz</div>
-        <button class="btn btn-success" onClick={generateQuiz}>
+        <button className="btn btn-success" onClick={generateQuiz}>
           Generate Quiz
         </button>
       </div>
       <div className="mt-5">
-        <div class="form-control w-full max-w-xs">
-          <label class="label">
-            <span class="label-text">Pick the type of Question*</span>
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="label-text">Pick the type of Question*</span>
           </label>
           <select
-            class="select select-bordered"
+            className="select select-bordered"
             value={selectedQustionType}
             onChange={(e) => setSelectedQustionType(e.target.value)}
           >

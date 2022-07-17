@@ -1,6 +1,6 @@
 import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc, query, where } from 'firebase/firestore'
 
-export default async function loginWithGamil(req, res) {
+export default async function l(req, res) {
     if(req.method === 'POST') {
         try {
             const db = getFirestore();

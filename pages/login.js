@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
-import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase-config.js';
 import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
 
@@ -10,25 +9,30 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    // onAuthStateChanged(auth, (currentUser) => {
-    //     console.log(currentUser);
-    //     if(currentUser){
-    //       router.push('/dashboard');
-    //     }else{
-    //       router.push('/login');
-    //     }
-    //     // if(!currentUser){
-    //     //   // setUser(currentUser);
-    //     //   router.push("/login");
-    //     //   // console.log('User', currentUser);
-    //     // }
-    // });
+    const getAdmin = async (email) => {
+      try {
+        const response = await fetch('/api/addAdmin', {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'email': email,
+          }
+        });
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error(error.message);
+        return null;
+      }
+    }
 
     const handleGoogleSignIn = async () => {
       try {
         const provider = new GoogleAuthProvider();
         const cred = await signInWithPopup(auth, provider);
         localStorage.setItem("idToken", cred._tokenResponse.idToken);
+        const admin = await getAdmin(cred.user.email);
+        localStorage.setItem("admin",admin.id);
       } catch (error) {
         console.error(error.message);
       }
@@ -46,7 +50,9 @@ export default function Login() {
         });
         const data = await response.json();
         localStorage.setItem("idToken", data.user._tokenResponse.idToken);
-        if(data.success) { router.push("/dashboard") }
+        const admin = await getAdmin(email);
+        localStorage.setItem("admin",admin.id);
+        if(data.success) { router.push(`/dashboard?id=${admin.id}`) }
         console.log("Email data: ", response);
       } catch (error) {
         console.error(error.message);
