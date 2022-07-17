@@ -1,4 +1,4 @@
-import { doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { doc, getDoc, getDocs, query, where, updateDoc, arrayUnion } from "firebase/firestore";
 import { db, resultCollection } from "../../firebase-config";
 
 export default function handler(req, res) {

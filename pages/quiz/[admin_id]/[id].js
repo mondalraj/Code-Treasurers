@@ -51,6 +51,7 @@ const Quizid = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [nextQuestion, setNextQuestion] = useState(false);
   const [endQuiz, setEndQuiz] = useState(false);
+  // const [questionsAttempted, setQuestionAttempted] = useState(0);
   const getFunction = (interval) => {
     // setCurrentQuestion(QuizQuestions[++index]);
     // setTimeout(() => {
@@ -76,21 +77,25 @@ const Quizid = () => {
     }
   }, [nextQuestion, quiz]);
   
-  let quiz_details = []
+  // let quiz_details = []
 
   useEffect(()=> {
     if(endQuiz == true){
       const postQuizQuestions = async () => {
-        const { admin_id } = router.query;
-        const response = await fetch("/api/generateRetrieveQuiz", {
+        const { admin_id, id } = router.query;
+        const response = await fetch("/api/generateRetrieveResult", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
             admin_id: admin_id,
+            quiz_id: id,
           },
           body: JSON.stringify({
-            quiz_details: {
-              
+            quiz_result: {
+              id: '1234',
+              name: localStorage.getItem("name"),
+              score: localStorage.getItem("score"),
+              attempted: localStorage.getItem("attempted")
             }
           })
         });
@@ -135,6 +140,7 @@ const Quizid = () => {
           setNextQuestion={setNextQuestion}
           endQuiz={endQuiz}
           i={i}
+
         />
       ) : (
         <div className="flex justify-center items-center h-screen">

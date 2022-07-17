@@ -1,6 +1,7 @@
 import { current } from "daisyui/src/colors";
 import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
+import party from "../public/assets/party.gif";
 
 export default function QuizComponent({
   timer,
@@ -15,10 +16,11 @@ export default function QuizComponent({
   const [myAnswer, setMyAnswer] = useState("");
   // const [selected, setSelected] = useState("");
   const [score, setScore] = useState(0);
-  const timeInterval = currentQuestion.timeInterval
+  const [questionsAttempted, setQuestionAttempted] = useState(0);
+  const timeInterval = currentQuestion.timeInterval;
   useEffect(() => {
     let counter = parseInt(timeInterval);
-    console.log("hi",timeInterval, index);
+    console.log("hi", timeInterval, index);
     const interval = setInterval(() => {
       if (counter > 0) {
         counter--;
@@ -45,10 +47,11 @@ export default function QuizComponent({
     }
     setNextQuestion(true);
   };
+
+  console.log(questionsAttempted);
   
-  localStorage.setItem("score", score)
-
-
+  localStorage.setItem("score", score);
+  localStorage.setItem("attempted", questionsAttempted);
 
   return (
     <>
@@ -56,7 +59,17 @@ export default function QuizComponent({
         <div className="card w-1/2 bg-white shadow-xl">
           <div className="card-body">
             {endQuiz == true ? (
-              <p className="text-center text-black font-bold text-xl">Thanks for taking the quiz. You can close this tab!</p>
+              <div className="flex flex-col justify-center items-center ">
+                <img
+                  src="https://c.tenor.com/qg8K8VOmzJwAAAAi/party-popper-confetti.gif"
+                  alt=""
+                  srcset=""
+                  className="w-84 ml-5"
+                />
+                <p className="text-center text-black font-bold text-xl mt-5">
+                  Thanks for taking the quiz. You can close this tab!
+                </p>
+              </div>
             ) : (
               <>
                 <div className="flex justify-between">
@@ -75,7 +88,7 @@ export default function QuizComponent({
                         <label
                           className="rounded-lg border-[1px] border-gray-500 p-2  w-full text-start text-black hover:bg-gray-400 cursor-pointer hover:text-white"
                           onClick={() => {
-                            console.log(index);
+                            setQuestionAttempted(questionsAttempted+1)
                             scoreCalculator(index);
                           }}
                           htmlFor={index}
