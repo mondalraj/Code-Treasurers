@@ -66,7 +66,7 @@ export default function DashboardLayout({ children }) {
         </div>
         <div className="mb-2">
           <button className="btn btn-outline btn-block text-red-500" onClick={clickHandler}>
-            Logout, Rajib
+            Logout
           </button>
         </div>
       </div>

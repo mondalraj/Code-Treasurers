@@ -3,6 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
 import { auth } from '../firebase-config.js';
 import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
 
 export default function Login() {
     const router = useRouter();
@@ -21,7 +22,9 @@ export default function Login() {
         const data = await response.json();
         return data;
       } catch (error) {
-        console.error(error.message);
+        Notify.failure("Something went wrong", {
+          position: "top-right",
+        });
         return null;
       }
     }
@@ -34,7 +37,9 @@ export default function Login() {
         const admin = await getAdmin(cred.user.email);
         localStorage.setItem("admin",admin.id);
       } catch (error) {
-        console.error(error.message);
+        Notify.failure("Something went wrong", {
+          position: "top-right",
+        });
       }
     };
 
@@ -55,7 +60,9 @@ export default function Login() {
         if(data.success) { router.push(`/dashboard?id=${admin.id}`) }
         console.log("Email data: ", response);
       } catch (error) {
-        console.error(error.message);
+        Notify.failure("Something went wrong", {
+          position: "top-right",
+        });
       }
     }
   

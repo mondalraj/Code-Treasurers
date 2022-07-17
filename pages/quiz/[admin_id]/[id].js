@@ -92,7 +92,7 @@ const Quizid = () => {
           },
           body: JSON.stringify({
             quiz_result: {
-              id: '1234',
+              id: "#",
               name: localStorage.getItem("name"),
               score: localStorage.getItem("score"),
               attempted: localStorage.getItem("attempted")
@@ -109,6 +109,7 @@ const Quizid = () => {
   useEffect(() => {
     const fetchQuizQuestions = async () => {
       const { admin_id, id } = router.query;
+      console.log(admin_id);
       const response = await fetch("/api/generateRetrieveQuiz", {
         method: "GET",
         headers: {

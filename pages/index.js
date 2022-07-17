@@ -2,64 +2,6 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 export default function Home() {
-  // useEffect(() => {
-  //   fetch("/api/generateRetrieveQuiz", {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       admin_id: "Fl7tmAtPBRP4cv6u4Beu",
-  //       quiz_id: "quiz_id1",
-  //     },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => console.log(data));
-  // ---------------------------------------------------------------------------------------------------------------------
-  // fetch("/api/generateRetrieveQuiz", {
-  //   method: "PUT",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     admin_id: "klvU4NDgbRkw8D1QPRzF",
-  //   },
-  //   body: JSON.stringify({
-  //     id: "quiz_id1",
-  //     question: "What is the capital of Turkey?",
-  //     options: ["New Delhi", "Mumbai", "Istanbol", "Kolkata"],
-  //     answer: 2, // index of the correct answer
-  //   }),
-  // });
-  // ---------------------------------------------------------------------------------------------------------------------
-  // fetch("/api/getAllAdminData", {
-  //   method: "GET",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     admin_id: "klvU4NDgbRkw8D1QPRzF",
-  //   },
-  // })
-  //   .then((res) => res.json())
-  //   .then((data) => console.log(data));
-  // ---------------------------------------------------------------------------------------------------------------------
-  // fetch("/api/generateRetrieveResult", {
-  //   method: "GET",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     admin_id: "klvU4NDgbRkw8D1QPRzF",
-  //     quiz_id: "quiz_id1",
-  //   },
-  // })
-  //   .then((res) => res.json())
-  //   .then((data) => console.log(data));
-
-  //   let counter = 99;
-  //   setInterval(() => {
-  //     if (counter >= 0) {
-  //       counter--;
-  //     }
-  //     document
-  //       .getElementById("counterElement")
-  //       .style.setProperty("--value", counter);
-  //   }, 1000);
-  // }, []);
-
   return (
     <div>
       <div className="bg-info py-2 px-10 flex justify-between items-center">
