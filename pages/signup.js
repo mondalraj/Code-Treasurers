@@ -41,7 +41,11 @@ export default function Signup() {
       const cred = await signInWithPopup(auth, provider);
       localStorage.setItem("idToken", cred._tokenResponse.idToken);
       const admin = await getAdmin(cred.user.email, cred.user.displayName);
-      localStorage.setItem("admin", admin.user._key.path.segments[1]);
+      let adminId = admin.user._key.path.segments[1];
+      localStorage.setItem("admin", adminId);
+      if (cred) {
+        router.push(`/dashboard?id=${adminId}`);
+      }
     } catch (error) {
       Notify.failure("Something went wrong", {
         position: "top-right",

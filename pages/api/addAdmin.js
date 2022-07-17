@@ -8,6 +8,7 @@ export default async function addAdmin(req, res) {
             const data = await addDoc(adminCollection, {
                 email: email,
                 name: name,
+                quizes: [],
               })
             res.status(200).json({ message: 'Successfully added', user: data });
         } catch (error) {
@@ -17,8 +18,10 @@ export default async function addAdmin(req, res) {
         const { email } = req.headers;
         try {
             const q = query(adminCollection, where("email", "==", email));
+
             getDocs(q).then((querySnapshot) => {
                   querySnapshot.forEach((doc) => {
+                    console.log(doc.data(),doc.id); 
                     return res
                       .status(200)
                       .json({ status: "success", id: doc.id });

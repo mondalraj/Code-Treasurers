@@ -17,6 +17,7 @@ export default function DashboardLayout({ children }) {
 
   const clickHandler = () => {
     localStorage.removeItem("idToken");
+    localStorage.removeItem("admin");
     signOut(auth).then((data) => router.push("/login"));
   }
 
