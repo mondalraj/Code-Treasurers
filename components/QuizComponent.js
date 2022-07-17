@@ -8,35 +8,47 @@ export default function QuizComponent({
   currentQuestion,
   setNextQuestion,
   endQuiz,
+  index,
   i,
 }) {
   const options = ["a", "b", "c", "d"];
   const [myAnswer, setMyAnswer] = useState("");
-  const [selected, setSelected] = useState("");
-  const changeAnswer = (answer) => {
-    setMyAnswer(answer);
-    console.log(answer);
-  };
-
-  console.log(currentQuestion);
-
+  // const [selected, setSelected] = useState("");
+  const [score, setScore] = useState(0);
+  const timeInterval = currentQuestion.timeInterval
   useEffect(() => {
-    let counter = currentQuestion.timeInterval;
+    let counter = parseInt(timeInterval);
+    console.log("hi",timeInterval, index);
     const interval = setInterval(() => {
-      if (counter >= 0) {
+      if (counter > 0) {
         counter--;
       }
-      if (currentQuestion.index < i-1) {
+      if (counter == 0) {
+        clearInterval(interval);
+        setNextQuestion(true);
+      }
+      if (index < i) {
         document
           .getElementById("counterElement")
-          .style.setProperty("--value", counter);
+          ?.style.setProperty("--value", counter);
       }
     }, 1000);
 
     return () => {
       clearInterval(interval);
     };
-  }, [currentQuestion.timeInterval]);
+  }, [index]);
+
+  const scoreCalculator = (data) => {
+    if (data == currentQuestion.answerIndex) {
+      setScore(score + parseInt(currentQuestion.marks));
+    }
+    setNextQuestion(true);
+  };
+  
+  localStorage.setItem("score", score)
+
+
 
   return (
     <>
@@ -44,12 +56,12 @@ export default function QuizComponent({
         <div className="card w-1/2 bg-white shadow-xl">
           <div className="card-body">
             {endQuiz == true ? (
-              <p>Finished</p>
+              <p className="text-center text-black font-bold text-xl">Thanks for taking the quiz. You can close this tab!</p>
             ) : (
               <>
                 <div className="flex justify-between">
                   <h2 className="card-title text-black">
-                    Question {currentQuestion.index + 1}
+                    Question {index + 1}
                   </h2>
                   <span className="countdown font-mono text-6xl">
                     <span id="counterElement"></span>
@@ -62,7 +74,10 @@ export default function QuizComponent({
                       <>
                         <label
                           className="rounded-lg border-[1px] border-gray-500 p-2  w-full text-start text-black hover:bg-gray-400 cursor-pointer hover:text-white"
-                          onClick={() => setNextQuestion(true)}
+                          onClick={() => {
+                            console.log(index);
+                            scoreCalculator(index);
+                          }}
                           htmlFor={index}
                         >
                           {data}

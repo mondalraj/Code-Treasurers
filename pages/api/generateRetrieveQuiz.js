@@ -29,6 +29,7 @@ export default function handler(req, res) {
     })
       .then((data) => {
         console.log(data);
+        res.status(200).json({ status: "success", data: data });
       })
       .catch((err) => {
         console.log(err);
