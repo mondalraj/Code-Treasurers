@@ -2,6 +2,7 @@ import { current } from "daisyui/src/colors";
 import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
 import party from "../public/assets/party.gif";
+import Image from "next/image";
 
 export default function QuizComponent({
   timer,
@@ -18,9 +19,12 @@ export default function QuizComponent({
   const [score, setScore] = useState(0);
   const [questionsAttempted, setQuestionAttempted] = useState(0);
   const timeInterval = currentQuestion.timeInterval;
+  const [marks, setMarks] = useState(0);
+
   useEffect(() => {
     let counter = parseInt(timeInterval);
-    console.log("hi", timeInterval, index);
+    // console.log("hi", timeInterval, index);
+    setMarks(marks + parseInt(currentQuestion.marks));
     const interval = setInterval(() => {
       if (counter > 0) {
         counter--;
@@ -49,8 +53,9 @@ export default function QuizComponent({
   };
 
   console.log(questionsAttempted);
-  
+
   localStorage.setItem("score", score);
+  localStorage.setItem("totalMarks", marks);
   localStorage.setItem("attempted", questionsAttempted);
 
   return (
@@ -60,14 +65,17 @@ export default function QuizComponent({
           <div className="card-body">
             {endQuiz == true ? (
               <div className="flex flex-col justify-center items-center ">
-                <img
+                <Image
                   src="https://c.tenor.com/qg8K8VOmzJwAAAAi/party-popper-confetti.gif"
                   alt=""
-                  srcset=""
-                  className="w-84 ml-5"
+                  width={400}
+                  height={280}
                 />
                 <p className="text-center text-black font-bold text-xl mt-5">
-                  Thanks for taking the quiz. You can close this tab!
+                  Thanks for taking the quiz.
+                </p>
+                <p className="text-black text-lg">
+                  Your score is {score}/{marks}
                 </p>
               </div>
             ) : (
@@ -81,14 +89,14 @@ export default function QuizComponent({
                   </span>
                 </div>
                 <p className="text-black">{currentQuestion.question}</p>
-                <div className="card-actions flex flex-col mt-3">
+                <div className="card-actions flex flex-col mt-3 w-full">
                   {currentQuestion.options.map((data, index) => {
                     return (
                       <>
                         <label
                           className="rounded-lg border-[1px] border-gray-500 p-2  w-full text-start text-black hover:bg-gray-400 cursor-pointer hover:text-white"
                           onClick={() => {
-                            setQuestionAttempted(questionsAttempted+1)
+                            setQuestionAttempted(questionsAttempted + 1);
                             scoreCalculator(index);
                           }}
                           htmlFor={index}
