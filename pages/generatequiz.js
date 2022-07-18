@@ -22,6 +22,7 @@ export default function Generatequiz() {
       });
       return;
     }
+    const ans = prompt("Enter passing percentage:");
     await fetch("/api/generateRetrieveQuiz", {
       method: "PUT",
       headers: {
