@@ -72,6 +72,7 @@ const Quizid = () => {
       } else {
         setEndQuiz(true);
         localStorage.removeItem("quizStart");
+        localStorage.removeItem("totalMarks")
       }
       setNextQuestion(false);
     }
